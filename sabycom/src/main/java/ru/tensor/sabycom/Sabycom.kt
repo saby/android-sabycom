@@ -48,6 +48,12 @@ object Sabycom : SabycomPushService {
         countController.requestCount()
 
     }
+    /**
+     * Зарегестрировать анонимного пользователя
+     */
+    fun registerAnonymous() {
+        //todo implement
+    }
 
     /**
      * Показать веб виджет
