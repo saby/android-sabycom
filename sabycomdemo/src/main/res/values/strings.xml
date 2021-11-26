@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name" translatable="false">SabycomDemo</string>
     <string name="sabycom_button_text" translatable="false">Sabycom</string>
+    <string name="hint_name">Имя</string>
+    <string name="hint_surname">Фамилия</string>
+    <string name="hint_phone">Телефон</string>
+    <string name="hint_email">Email</string>
+    <string name="start_button">Начать</string>
+    <string name="start_anonymous_button">Анонимный пользователь</string>
+    <string name="hint_app_id">AppId</string>
+
+    <string-array name="stands">
+        <item>prod</item>
+        <item>fix</item>
+        <item>test</item>
+        <item>pretest</item>
+        <item>dev</item>
+    </string-array>
 </resources>
