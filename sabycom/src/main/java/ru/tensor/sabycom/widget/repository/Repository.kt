@@ -12,7 +12,9 @@ internal class Repository(
 ) {
     fun sendPushToken(token: String) {
         localRepository.savePushToken(token)
-        syncUserData()
+        if (localRepository.getUserData()!=null){
+            syncUserData()
+        }
     }
 
     fun registerUser(userData: UserData) {

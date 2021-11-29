@@ -10,6 +10,11 @@ import androidx.fragment.app.viewModels
 import ru.tensor.sabycom.Sabycom
 import ru.tensor.sabycomdemo.databinding.DemoFragmentBinding
 
+/**
+ * Фрагмент с демонстрацией работы виджета "оналйн консультант"
+ *
+ * @author ma.kolpakov
+ */
 class DemoFragment : Fragment() {
 
     companion object {

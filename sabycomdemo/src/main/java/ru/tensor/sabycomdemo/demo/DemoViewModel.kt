@@ -8,7 +8,7 @@ import ru.tensor.sabycom.Sabycom
 import ru.tensor.sabycom.widget.counter.UnreadCounterCallback
 
 /**
- * Вью модель экрана с демонстрацией виджета "отналйн консультант"
+ * Вью модель экрана с демонстрацией виджета "оналйн консультант"
  *
  * @author ma.kolpakov
  */

@@ -31,6 +31,6 @@ class SabycomApp : Application() {
         const val SABYCOM_STAND_PREFS = "SABYCOM_STAND_PREFS"
         const val CURRENT_STAND_KEY = "CURRENT_STAND_KEY"
         const val APP_ID_KEY = "APP_ID_KEY"
-        const val DEFAULT_APP_ID = "APP_ID_KEY"
+        const val DEFAULT_APP_ID = "b956719f-965c-4204-815e-89894ba2aa9e"
     }
 }
