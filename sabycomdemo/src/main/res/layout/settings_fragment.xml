@@ -18,6 +18,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="name"
             android:ems="10"
             android:hint="@string/hint_name"
             android:inputType="textPersonName"/>
@@ -26,7 +27,7 @@
             android:id="@+id/surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:autofillHints="name"
             android:hint="@string/hint_surname"
             android:inputType="textPersonName"/>
 
@@ -34,7 +35,7 @@
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
+            android:autofillHints="phone"
             android:ems="10"
             android:hint="@string/hint_phone"
             android:inputType="phone"/>
@@ -43,28 +44,10 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
             android:ems="10"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/buttons_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_data_container">
-
-
-    <EditText
-            android:id="@+id/app_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_app_id"
-            android:inputType="text"/>
 
         <Button
             android:id="@+id/start_button"
@@ -79,15 +62,41 @@
             android:text="@string/start_anonymous_button"/>
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/stand"
+    <LinearLayout
+        android:id="@+id/buttons_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/stands"
         android:layout_marginTop="20dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttons_container"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_data_container">
+
+
+        <EditText
+            android:id="@+id/app_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_app_id"
+            android:autofillHints="none"
+            android:inputType="text"/>
+
+        <Spinner
+            android:id="@+id/stand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:entries="@array/stands"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttons_container"/>
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restart_app"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
