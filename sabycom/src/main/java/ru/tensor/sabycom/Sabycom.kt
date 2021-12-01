@@ -17,6 +17,7 @@ import ru.tensor.sabycom.widget.counter.UnreadCounterCallback
 import ru.tensor.sabycom.widget.repository.Repository
 import ru.tensor.sabycom.widget.repository.SabycomLocalRepository
 import ru.tensor.sabycom.widget.repository.SabycomRemoteRepository
+import ru.tensor.sabycom.widget.setHost
 
 /**
  * СБИС онлайн консультант.
@@ -38,6 +39,7 @@ object Sabycom : SabycomPushService {
      * @param apiKey - API Ключ приложения
      */
     fun initialize(context: Context, apiKey: String) {
+        setHost(context)
         check(sabycomFeature == null && pushService == null) { "Sabycom already initialized" }
         initFresco(context)
         repository = Repository(SabycomRemoteRepository(), SabycomLocalRepository(context))
@@ -57,6 +59,12 @@ object Sabycom : SabycomPushService {
         checkNotNull(sabycomFeature) { NOT_INIT_ERROR }.registerUser(userData)
         countController.requestCount()
 
+    }
+    /**
+     * Зарегестрировать анонимного пользователя
+     */
+    fun registerAnonymousUser() {
+        // TODO: 29.11.2021 реализовать https://online.sbis.ru/opendoc.html?guid=4e12592d-954b-4a92-88dc-d02b156961e6
     }
 
     /**
