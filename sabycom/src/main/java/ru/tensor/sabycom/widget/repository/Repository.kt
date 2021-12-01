@@ -48,6 +48,6 @@ internal class Repository(
 
     private companion object{
         private const val USER_NOT_REGISTER_ERROR = "Before using Sabycom, it is necessary to register user " +
-                " [Sabycom.registerUser(userData: UserData)] or [Sabycom.registerAnonymousUser()] "
+                "Sabycom.registerUser(userData: UserData) or Sabycom.registerAnonymousUser()"
     }
 }

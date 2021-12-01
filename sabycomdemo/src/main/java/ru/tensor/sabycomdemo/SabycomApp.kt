@@ -11,7 +11,7 @@ import ru.tensor.sabycom.Sabycom
 class SabycomApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        getSharedPreferences(SABYCOM_STAND_PREFS, Context.MODE_PRIVATE).getString(APP_ID_KEY, DEFAULT_APP_ID)?.let {
+        getSharedPreferences(SABYCOM_HOST_PREFS, Context.MODE_PRIVATE).getString(APP_ID_KEY, DEFAULT_APP_ID)?.let {
             Sabycom.initialize(applicationContext, it)
         }
         refreshToken()
@@ -28,8 +28,8 @@ class SabycomApp : Application() {
     }
 
     internal companion object {
-        const val SABYCOM_STAND_PREFS = "SABYCOM_STAND_PREFS"
-        const val CURRENT_STAND_KEY = "CURRENT_STAND_KEY"
+        const val SABYCOM_HOST_PREFS = "SABYCOM_HOST_PREFS"
+        const val CURRENT_HOST_KEY = "CURRENT_HOST_KEY"
         const val APP_ID_KEY = "APP_ID_KEY"
         const val DEFAULT_APP_ID = "b956719f-965c-4204-815e-89894ba2aa9e"
     }

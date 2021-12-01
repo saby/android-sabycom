@@ -1,9 +1,8 @@
 package ru.tensor.sabycomdemo.demo
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ru.tensor.sabycom.Sabycom
 import ru.tensor.sabycom.widget.counter.UnreadCounterCallback
 
@@ -12,7 +11,7 @@ import ru.tensor.sabycom.widget.counter.UnreadCounterCallback
  *
  * @author ma.kolpakov
  */
-class DemoViewModel(application: Application) : AndroidViewModel(application) {
+class DemoViewModel : ViewModel() {
     private val messageCounterLiveData = MutableLiveData(0)
     val messageCounter: LiveData<Int> = messageCounterLiveData
 

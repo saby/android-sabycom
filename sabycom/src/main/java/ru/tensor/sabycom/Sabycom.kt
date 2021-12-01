@@ -11,7 +11,7 @@ import ru.tensor.sabycom.widget.counter.UnreadCounterCallback
 import ru.tensor.sabycom.widget.repository.Repository
 import ru.tensor.sabycom.widget.repository.SabycomLocalRepository
 import ru.tensor.sabycom.widget.repository.SabycomRemoteRepository
-import ru.tensor.sabycom.widget.setStand
+import ru.tensor.sabycom.widget.setHost
 
 /**
  * СБИС онлайн консультант.
@@ -32,7 +32,7 @@ object Sabycom : SabycomPushService {
      * @param apiKey - API Ключ приложения
      */
     fun initialize(context: Context, apiKey: String) {
-        setStand(context)
+        setHost(context)
         check(sabycomFeature == null && pushService == null) { "Sabycom already initialized" }
         repository = Repository(SabycomRemoteRepository(), SabycomLocalRepository(context))
         countController = UnreadCountController(repository)

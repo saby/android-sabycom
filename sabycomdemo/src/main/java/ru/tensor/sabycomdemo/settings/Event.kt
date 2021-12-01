@@ -5,19 +5,17 @@ package ru.tensor.sabycomdemo.settings
  *
  * @author ma.kolpakov
  */
-internal open class Event<out T>(private val content: T) {
+internal class Event<out T>(private val content: T) {
 
     private var isHandled = false
 
     /**
-     * Получить контент. Если событие уже было обработано вернется null
+     * Получить контент. Если событие еще не было  обработано
      */
-    fun getContentIfNotHandled(): T? {
-        return if (isHandled) {
-            null
-        } else {
+    fun handleEvent(handler: (T) -> Unit) {
+        if (!isHandled) {
             isHandled = true
-            content
+            handler(content)
         }
     }
 }

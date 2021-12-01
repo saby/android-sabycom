@@ -10,7 +10,7 @@ import kotlin.jvm.Throws
  * @author am.boldinov
  */
 internal object UrlUtil {
-    internal var currentStand: StandPrefix = StandPrefix.PRE_TEST
+    internal var currentHost: Host = Host.PRE_TEST
     const val HOST_URL =
         "https://%sconsultant.sbis.ru/" // TODO 29.09.2021 настраиваемый gradle url
 
@@ -21,7 +21,7 @@ internal object UrlUtil {
                 put("service_id", apiKey)
             })
         }
-        return HOST_URL.format(currentStand.prefix).plus("consultant/$apiKey/?p=${params.encodeParams()}")
+        return HOST_URL.format(currentHost.prefix).plus("consultant/$apiKey/?p=${params.encodeParams()}")
     }
 
     @Throws(UnsupportedEncodingException::class)
@@ -31,9 +31,9 @@ internal object UrlUtil {
         return URLEncoder.encode(base64String, Charsets.UTF_8.displayName())
     }
 
-    enum class StandPrefix(val prefix: String) {
+    enum class Host(val prefix: String) {
         PROD(""),
-        FIX("pre-test-"),
+        FIX("fix-"),
         TEST("test-"),
         PRE_TEST("pre-test-"),
         DEV("dev-"),

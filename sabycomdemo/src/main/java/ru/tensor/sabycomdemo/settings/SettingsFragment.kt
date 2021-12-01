@@ -59,9 +59,9 @@ internal class SettingsFragment : Fragment() {
         binding.appId.doOnTextChanged { text, _, _, _ ->
             viewModel.appId = text.toString()
         }
-        binding.stand.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.host.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.stand = position
+                viewModel.host = position
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) = Unit
@@ -71,10 +71,7 @@ internal class SettingsFragment : Fragment() {
         }
 
         viewModel.showDemo.observe(viewLifecycleOwner) {
-            // если событие было обработано ранее ни чего не делаем
-            if (it.getContentIfNotHandled() == null) return@observe
-
-            startDemo()
+            it.handleEvent { startDemo() }
         }
         return binding.root
     }
@@ -90,7 +87,7 @@ internal class SettingsFragment : Fragment() {
         binding.phone.setText(viewModel.phone)
         binding.email.setText(viewModel.email)
         binding.appId.setText(viewModel.appId)
-        binding.stand.setSelection(viewModel.stand)
+        binding.host.setSelection(viewModel.host)
     }
 
     private fun startDemo() {

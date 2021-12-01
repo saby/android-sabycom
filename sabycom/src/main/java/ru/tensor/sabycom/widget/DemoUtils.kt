@@ -1,6 +1,7 @@
 package ru.tensor.sabycom.widget
 
 import android.content.Context
+import android.util.Log
 import ru.tensor.sabycom.data.UrlUtil
 import java.lang.Exception
 
@@ -9,19 +10,20 @@ import java.lang.Exception
  *
  * @author ma.kolpakov
  */
-internal fun setStand(context: Context) {
+internal fun setHost(context: Context) {
     val appPackage = context.applicationContext.applicationInfo.name
     if (!appPackage.startsWith("ru.tensor")) return
-    val sharedPreferences = context.getSharedPreferences(SABYCOM_STAND_PREFS, Context.MODE_PRIVATE)
-    val standString = sharedPreferences.getString(CURRENT_STAND_KEY, "")!!
+    val sharedPreferences = context.getSharedPreferences(SABYCOM_HOST_PREFS, Context.MODE_PRIVATE)
+    val hostString = sharedPreferences.getString(CURRENT_HOST_KEY, "")!!
 
-    if (standString.isEmpty()) return
+    if (hostString.isEmpty()) return
     try {
-        UrlUtil.currentStand = UrlUtil.StandPrefix.valueOf(standString.uppercase())
+        UrlUtil.currentHost = UrlUtil.Host.valueOf(hostString.uppercase())
     } catch (e: Exception) {
-        //ignore
+        Log.d(LOG_TAG,"Unresolved host prefix $hostString")
     }
 }
 
-private const val SABYCOM_STAND_PREFS = "SABYCOM_STAND_PREFS"
-private const val CURRENT_STAND_KEY = "CURRENT_STAND_KEY"
+private const val SABYCOM_HOST_PREFS = "SABYCOM_HOST_PREFS"
+private const val CURRENT_HOST_KEY = "CURRENT_HOST_KEY"
+private const val LOG_TAG = "SABYCOM_DEMO"

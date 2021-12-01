@@ -10,9 +10,9 @@ import ru.tensor.sabycom.Sabycom
 import ru.tensor.sabycom.data.UserData
 import ru.tensor.sabycomdemo.R
 import ru.tensor.sabycomdemo.SabycomApp.Companion.APP_ID_KEY
-import ru.tensor.sabycomdemo.SabycomApp.Companion.CURRENT_STAND_KEY
+import ru.tensor.sabycomdemo.SabycomApp.Companion.CURRENT_HOST_KEY
 import ru.tensor.sabycomdemo.SabycomApp.Companion.DEFAULT_APP_ID
-import ru.tensor.sabycomdemo.SabycomApp.Companion.SABYCOM_STAND_PREFS
+import ru.tensor.sabycomdemo.SabycomApp.Companion.SABYCOM_HOST_PREFS
 import java.util.*
 
 /**
@@ -23,7 +23,7 @@ import java.util.*
 internal class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val sharedPreferences =
-        getApplication<Application>().getSharedPreferences(SABYCOM_STAND_PREFS, Context.MODE_PRIVATE)
+        getApplication<Application>().getSharedPreferences(SABYCOM_HOST_PREFS, Context.MODE_PRIVATE)
 
     private val errorMessageLiveData = MutableLiveData<String>()
     val errorMessage: LiveData<String> = errorMessageLiveData
@@ -37,11 +37,11 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
     var phone: String = ""
     var email: String = ""
     var appId: String = ""
-    var stand: Int = 0
+    var host: Int = 0
 
     init {
         appId = sharedPreferences.getString(APP_ID_KEY, null) ?: DEFAULT_APP_ID
-        stand = getStandId(sharedPreferences.getString(CURRENT_STAND_KEY, null) ?: "prod")
+        host = getHostId(sharedPreferences.getString(CURRENT_HOST_KEY, null) ?: "prod")
     }
 
     fun startWithData() {
@@ -62,7 +62,7 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
 
     private fun validateData(): Boolean {
         appId.ifEmpty {
-            errorMessageLiveData.value = "Поле appId обзязательно"
+            errorMessageLiveData.value = getApplication<Application>().getString(R.string.no_app_id_error)
             return false
         }
         return true
@@ -70,12 +70,12 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
 
     fun restart() {
         sharedPreferences.edit(true) {
-            putString(CURRENT_STAND_KEY, getStandName(stand))
+            putString(CURRENT_HOST_KEY, getHostName(host))
             putString(APP_ID_KEY, appId)
         }
     }
 
-    private fun getStandName(id: Int) = getApplication<Application>().resources.getStringArray(R.array.stands)[id]
-    private fun getStandId(name: String) =
-        getApplication<Application>().resources.getStringArray(R.array.stands).indexOf(name)
+    private fun getHostName(id: Int) = getApplication<Application>().resources.getStringArray(R.array.hosts)[id]
+    private fun getHostId(name: String) =
+        getApplication<Application>().resources.getStringArray(R.array.hosts).indexOf(name)
 }
