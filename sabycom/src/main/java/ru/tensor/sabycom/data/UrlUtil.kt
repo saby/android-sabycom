@@ -11,8 +11,8 @@ import kotlin.jvm.Throws
  */
 internal object UrlUtil {
     internal var currentHost: Host = Host.PRE_TEST
-    const val HOST_URL =
-        "https://%sconsultant.sbis.ru/" // TODO 29.09.2021 настраиваемый gradle url
+    private const val HOST_URL_TEMPLATE = "https://%sconsultant.sbis.ru" // TODO 29.09.2021 настраиваемый gradle url
+    val HOST_URL: String = HOST_URL_TEMPLATE.format(currentHost.prefix)
 
     fun buildWidgetUrl(userId: String, apiKey: String): String {
         val params = JSONObject().apply {
@@ -21,7 +21,6 @@ internal object UrlUtil {
                 put("service_id", apiKey)
             })
         }
-        return HOST_URL.format(currentHost.prefix).plus("consultant/$apiKey/?p=${params.encodeParams()}")
         return HOST_URL.plus("/consultant/$apiKey/?p=${params.encodeParams()}")
     }
 

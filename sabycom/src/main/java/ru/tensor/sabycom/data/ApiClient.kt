@@ -12,7 +12,7 @@ import javax.net.ssl.HttpsURLConnection
 @WorkerThread
 internal object ApiClient {
 
-    private const val API_URL = UrlUtil.HOST_URL.plus("/service/restapi/")
+    private val API_URL = UrlUtil.HOST_URL.plus("/service/restapi/")
     private const val CONNECT_TIMEOUT = 10_000 // 10 sec
     private const val READ_TIMEOUT = CONNECT_TIMEOUT
 

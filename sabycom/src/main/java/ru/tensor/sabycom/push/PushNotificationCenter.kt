@@ -65,7 +65,7 @@ internal class PushNotificationCenter(
 
     override fun handlePushNotification(payload: Map<String, String>) {
         val message = parser.parse(payload)
-        if (message.addresseeId == repository.getUserData()?.id.toString()) {
+        if (message.addresseeId == repository.getUserData().id.toString()) {
             countController.requestCount()
             builderMap[message.type]?.build(message)?.apply {
                 handler.post {
