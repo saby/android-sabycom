@@ -11,15 +11,11 @@ import ru.tensor.sabycom.Sabycom
 import ru.tensor.sabycomdemo.databinding.DemoFragmentBinding
 
 /**
- * Фрагмент с демонстрацией работы виджета "оналйн консультант"
+ * Фрагмент с демонстрацией работы виджета "онлайн консультант"
  *
  * @author ma.kolpakov
  */
 class DemoFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = DemoFragment()
-    }
 
     private val viewModel: DemoViewModel by viewModels()
 

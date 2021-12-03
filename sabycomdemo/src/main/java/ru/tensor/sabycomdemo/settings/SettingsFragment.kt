@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import ru.tensor.sabycomdemo.R
@@ -18,7 +17,7 @@ import ru.tensor.sabycomdemo.demo.DemoFragment
 import kotlin.system.exitProcess
 
 /**
- * Фрагмент настрокек, показывается на главном экране\
+ * Фрагмент настроек, показывается на главном экране
  *
  * @author ma.kolpakov
  */
@@ -26,46 +25,14 @@ internal class SettingsFragment : Fragment() {
 
     private val viewModel: SettingsViewModel by viewModels()
     private lateinit var binding: SettingsFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = SettingsFragmentBinding.inflate(inflater)
+        binding = DataBindingUtil.inflate(inflater, R.layout.settings_fragment, null, false)
+        binding.viewModel = viewModel
 
-        binding.startButton.setOnClickListener {
-            viewModel.startWithData()
-        }
-        binding.anonymousButton.setOnClickListener {
-            viewModel.startAnonymous()
-        }
-
-        binding.restart.setOnClickListener {
-            viewModel.restart()
-            restartApp(requireContext())
-        }
-
-        binding.name.doOnTextChanged { text, _, _, _ ->
-            viewModel.name = text.toString()
-        }
-        binding.surname.doOnTextChanged { text, _, _, _ ->
-            viewModel.surname = text.toString()
-        }
-        binding.phone.doOnTextChanged { text, _, _, _ ->
-            viewModel.phone = text.toString()
-        }
-        binding.email.doOnTextChanged { text, _, _, _ ->
-            viewModel.email = text.toString()
-        }
-        binding.appId.doOnTextChanged { text, _, _, _ ->
-            viewModel.appId = text.toString()
-        }
-        binding.host.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.host = position
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) = Unit
-        }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
@@ -73,26 +40,16 @@ internal class SettingsFragment : Fragment() {
         viewModel.showDemo.observe(viewLifecycleOwner) {
             it.handleEvent { startDemo() }
         }
+
+        viewModel.restart.observe(viewLifecycleOwner) {
+            it.handleEvent { restartApp(requireContext()) }
+        }
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fillFields()
-    }
-
-    private fun fillFields() {
-        binding.name.setText(viewModel.name)
-        binding.surname.setText(viewModel.surname)
-        binding.phone.setText(viewModel.phone)
-        binding.email.setText(viewModel.email)
-        binding.appId.setText(viewModel.appId)
-        binding.host.setSelection(viewModel.host)
     }
 
     private fun startDemo() {
         parentFragmentManager.commit {
-            replace(R.id.fragment_container_view, DemoFragment.newInstance())
+            replace(R.id.fragment_container_view, DemoFragment())
             setReorderingAllowed(true)
             addToBackStack("Demo")
         }

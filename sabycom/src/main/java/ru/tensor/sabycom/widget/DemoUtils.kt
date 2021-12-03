@@ -6,12 +6,12 @@ import ru.tensor.sabycom.data.UrlUtil
 import java.lang.Exception
 
 /**
- * Метод достает тип стенда из локального хранилища если приложение из пакета [ru.tensor] это необходимо только для тестирования
+ * Если приложение из пакета [ru.tensor], метод достает тип стенда из локального хранилища. Это необходимо только для тестирования.
  *
  * @author ma.kolpakov
  */
 internal fun setHost(context: Context) {
-    val appPackage = context.applicationContext.applicationInfo.name
+    val appPackage = context.packageName
     if (!appPackage.startsWith("ru.tensor")) return
     val sharedPreferences = context.getSharedPreferences(SABYCOM_HOST_PREFS, Context.MODE_PRIVATE)
     val hostString = sharedPreferences.getString(CURRENT_HOST_KEY, "")!!

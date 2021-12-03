@@ -10,7 +10,7 @@ internal class Event<out T>(private val content: T) {
     private var isHandled = false
 
     /**
-     * Получить контент. Если событие еще не было  обработано
+     * Получить контент. Если событие еще не было обработано
      */
     fun handleEvent(handler: (T) -> Unit) {
         if (!isHandled) {
