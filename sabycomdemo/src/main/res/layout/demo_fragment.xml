@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/counter_background"
-        android:textAlignment="center"
-        android:textColor="@color/design_default_color_surface"
-        android:translationZ="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/show_sabycom"
-        app:layout_constraintEnd_toEndOf="@+id/show_sabycom"
-        app:layout_constraintTop_toTopOf="@+id/show_sabycom"
-        tools:text="1234"/>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/show_sabycom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sabycom_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/counter_background"
+            android:textAlignment="center"
+            android:textColor="@color/design_default_color_surface"
+            android:translationZ="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/show_sabycom"
+            app:layout_constraintEnd_toEndOf="@+id/show_sabycom"
+            app:layout_constraintTop_toTopOf="@+id/show_sabycom"
+            tools:text="1234"/>
+
+        <Button
+            android:id="@+id/show_sabycom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sabycom_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

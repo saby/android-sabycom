@@ -2,6 +2,7 @@ package ru.tensor.sabycomdemo.settings
 
 import android.app.Application
 import android.content.Context
+import android.view.View
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -25,11 +26,14 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
     private val sharedPreferences =
         getApplication<Application>().getSharedPreferences(SABYCOM_HOST_PREFS, Context.MODE_PRIVATE)
 
-    private val errorMessageLiveData = MutableLiveData<String>()
-    val errorMessage: LiveData<String> = errorMessageLiveData
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
 
-    private val showDemoLiveData = MutableLiveData<Event<Unit>>()
-    val showDemo: LiveData<Event<Unit>> = showDemoLiveData
+    private val _showDemo = MutableLiveData<Event<Unit>>()
+    val showDemo: LiveData<Event<Unit>> = _showDemo
+
+    private val _restart = MutableLiveData<Event<Unit>>()
+    val restart: LiveData<Event<Unit>> = _restart
 
     //Не используются LiveDate так как нет внешнего иточника данных
     var name: String = ""
@@ -44,35 +48,39 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
         host = getHostId(sharedPreferences.getString(CURRENT_HOST_KEY, null) ?: "prod")
     }
 
-    fun startWithData() {
+    @Suppress("UNUSED_PARAMETER")
+    fun startWithData(view: View) {
         if (!validateData()) return
 
         Sabycom.registerUser(UserData(UUID.randomUUID(), name, surname, email, phone))
 
-        showDemoLiveData.value = Event(Unit)
+        _showDemo.value = Event(Unit)
     }
 
-    fun startAnonymous() {
+    @Suppress("UNUSED_PARAMETER")
+    fun startAnonymous(view: View) {
         if (!validateData()) return
 
         Sabycom.registerAnonymousUser()
 
-        showDemoLiveData.value = Event(Unit)
+        _showDemo.value = Event(Unit)
     }
 
-    private fun validateData(): Boolean {
-        appId.ifEmpty {
-            errorMessageLiveData.value = getApplication<Application>().getString(R.string.no_app_id_error)
-            return false
-        }
-        return true
-    }
-
-    fun restart() {
+    @Suppress("UNUSED_PARAMETER")
+    fun restart(view: View) {
         sharedPreferences.edit(true) {
             putString(CURRENT_HOST_KEY, getHostName(host))
             putString(APP_ID_KEY, appId)
         }
+        _restart.value = Event(Unit)
+    }
+
+    private fun validateData(): Boolean {
+        appId.ifEmpty {
+            _errorMessage.value = getApplication<Application>().getString(R.string.no_app_id_error)
+            return false
+        }
+        return true
     }
 
     private fun getHostName(id: Int) = getApplication<Application>().resources.getStringArray(R.array.hosts)[id]
