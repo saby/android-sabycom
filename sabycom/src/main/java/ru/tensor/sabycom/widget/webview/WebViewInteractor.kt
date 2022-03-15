@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import im.delight.android.webview.AdvancedWebView
+import ru.tensor.sabycom.R
 
 /**
  * @author ma.kolpakov
@@ -49,7 +50,7 @@ internal class WebViewInteractor(private val fragment: Fragment, val onErrorCall
         if (isGranted || checkPermission(fragment.requireContext())) {
             downloadFile(fragment.requireContext(), fileUrl, fileName)
         } else {
-            Toast.makeText(fragment.requireContext(), "No permission to save file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(fragment.requireContext(), R.string.sabycom_no_file_save_permission, Toast.LENGTH_SHORT).show()
         }
     }
 
