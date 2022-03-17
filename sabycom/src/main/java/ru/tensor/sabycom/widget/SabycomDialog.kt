@@ -171,6 +171,13 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     private fun prepareWebView(webView: AdvancedWebView) {
         webView.setListener(requireActivity(), webViewInteractor)
+
+        webView.webChromeClient = object : WebChromeClient(){
+            override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+                return true
+            }
+        }
+
         with(webView.settings) {
             javaScriptEnabled = true
             javaScriptCanOpenWindowsAutomatically = true
