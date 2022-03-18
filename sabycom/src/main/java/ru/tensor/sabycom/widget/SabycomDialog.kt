@@ -68,7 +68,9 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
         webViewInteractor = WebViewInteractor(this, {
             showError()
         }, {
-            viewModel.showWebView()
+            if (viewModel.isNetworkAvailable()){
+                viewModel.showWebView()
+            }
         })
     }
 
