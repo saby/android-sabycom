@@ -3,10 +3,13 @@ package ru.tensor.sabycom.widget
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.*
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.updateLayoutParams
@@ -15,17 +18,16 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import im.delight.android.webview.AdvancedWebView
+import ru.tensor.sabycom.BuildConfig
 import ru.tensor.sabycom.R
 import ru.tensor.sabycom.Sabycom
 import ru.tensor.sabycom.data.UserData
 import ru.tensor.sabycom.databinding.SabycomDialogBinding
 import ru.tensor.sabycom.push.util.attachNotificationLocker
 import ru.tensor.sabycom.widget.js.JSInterface
-import android.content.Intent
-import im.delight.android.webview.AdvancedWebView
 import ru.tensor.sabycom.widget.webview.WebViewInteractor
-import android.webkit.*
-import ru.tensor.sabycom.BuildConfig
+import java.util.*
 
 
 /**
@@ -174,6 +176,14 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+                return true
+            }
+        }
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, srcUrl: String?): Boolean {
+                val url = srcUrl ?: return false
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 return true
             }
         }
