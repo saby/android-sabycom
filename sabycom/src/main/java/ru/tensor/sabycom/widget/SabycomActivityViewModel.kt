@@ -62,5 +62,11 @@ internal class SabycomActivityViewModel(
         _pageReady.postValue(Unit)
     }
 
+    fun showWebViewOnline() {
+        if (isNetworkAvailable()){
+            _pageReady.postValue(Unit)
+        }
+    }
+
     internal data class OpenWidgetData(val url: String, val userData: UserData, val channel: String)
 }
