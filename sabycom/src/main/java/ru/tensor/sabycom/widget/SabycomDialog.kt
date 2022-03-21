@@ -68,9 +68,7 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
         webViewInteractor = WebViewInteractor(this, {
             showError()
         }, {
-            if (viewModel.isNetworkAvailable()){
-                viewModel.showWebView()
-            }
+            viewModel.showWebViewOnline()
         })
     }
 
@@ -174,7 +172,7 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
     private fun prepareWebView(webView: AdvancedWebView) {
         webView.setListener(requireActivity(), webViewInteractor)
 
-        webView.webChromeClient = object : WebChromeClient(){
+        webView.webChromeClient = object : WebChromeClient() {
             override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
                 return true
             }
