@@ -18,6 +18,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+	signingConfigs {
+		debug {
+			if (System.getenv("DebugKey") != null) {
+				String paramKeyPath = System.getenv("DebugKey") as String
+				storeFile project.file(paramKeyPath)
+				storePassword System.getenv("KeyPassword")
+				keyPassword System.getenv("KeyPassword")
+				keyAlias 'DebugKey'
+				println "Build will be signed with keystore from $paramKeyPath"
+			}
+		}
+	}
+
     buildTypes {
         release {
             minifyEnabled false
