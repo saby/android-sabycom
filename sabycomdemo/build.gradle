@@ -29,7 +29,7 @@ android {
                 println "Build will be signed with keystore from $paramKeyPath"
             } else {
                 storeFile project.file('keystore/debug.keystore')
-			}
+            }
         }
     }
 
