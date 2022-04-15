@@ -22,6 +22,7 @@ import im.delight.android.webview.AdvancedWebView
 import ru.tensor.sabycom.BuildConfig
 import ru.tensor.sabycom.R
 import ru.tensor.sabycom.Sabycom
+import ru.tensor.sabycom.data.UrlUtil
 import ru.tensor.sabycom.data.UserData
 import ru.tensor.sabycom.databinding.SabycomDialogBinding
 import ru.tensor.sabycom.push.util.attachNotificationLocker
@@ -183,6 +184,7 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, srcUrl: String?): Boolean {
                 val url = srcUrl ?: return false
+                if (url.startsWith(UrlUtil.HOST_URL)) return false
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 return true
             }
