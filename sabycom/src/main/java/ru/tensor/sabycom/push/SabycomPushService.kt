@@ -35,6 +35,7 @@ interface SabycomPushService {
      * Обрабатывает токен, полученный от Messaging Service, для обеспечения подписки на
      * пуш-уведомления по событиям виджета СБИС онлайн консультант.
      * @param token токен регистрации на сервисе Cloud Messaging для текущего проекта
+     * @param type тип сервиса, от которого был получен токен регистрации
      */
-    fun sendToken(token: String)
+    fun sendToken(token: String, type: ServiceType)
 }

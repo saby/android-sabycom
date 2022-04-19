@@ -15,3 +15,5 @@
 .cxx
 local.properties
 google-services.json
+agconnect-services.json
+keystore

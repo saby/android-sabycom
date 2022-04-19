@@ -86,8 +86,8 @@ internal class PushNotificationCenter(
         }
     }
 
-    override fun sendToken(token: String) {
-        repository.sendPushToken(token)
+    override fun sendToken(token: String, type: ServiceType) {
+        repository.sendPushToken(token, type.value)
     }
 
     override fun dispatchOnCancel(tag: String, id: Int) {

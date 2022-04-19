@@ -10,8 +10,8 @@ internal class Repository(
     private val remoteRepository: RemoteRepository,
     private val localRepository: LocalRepository
 ) {
-    fun sendPushToken(token: String) {
-        localRepository.savePushToken(token)
+    fun sendPushToken(token: String, serviceType: String) {
+        localRepository.savePushToken(token, serviceType)
         if (getUserData() != null) {
             syncUserData()
         }
@@ -36,7 +36,8 @@ internal class Repository(
         remoteRepository.performRegisterSync(
             requireApiKey(),
             requireUserData(),
-            localRepository.getPushToken()
+            localRepository.getPushToken(),
+            localRepository.getServiceType()
         )
     }
 
@@ -63,6 +64,7 @@ internal class Repository(
                 requireApiKey(),
                 it,
                 localRepository.getPushToken(),
+                localRepository.getServiceType(),
                 true
             )
         }

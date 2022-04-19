@@ -2,8 +2,8 @@ package ru.tensor.sabycomdemo
 
 import android.app.Application
 import android.content.Context
-import com.google.firebase.messaging.FirebaseMessaging
 import ru.tensor.sabycom.Sabycom
+import ru.tensor.sabycomdemo.push.DemoPushMessagingSubscriber
 
 /**
  * @author ma.kolpakov
@@ -14,17 +14,11 @@ class SabycomApp : Application() {
         getSharedPreferences(SABYCOM_HOST_PREFS, Context.MODE_PRIVATE).getString(APP_ID_KEY, DEFAULT_APP_ID)?.let {
             Sabycom.initialize(applicationContext, it)
         }
-        refreshToken()
+        subscribeOnPushNotifications()
     }
 
-    private fun refreshToken() {
-        FirebaseMessaging.getInstance()
-            .token
-            .addOnSuccessListener { token ->
-                Sabycom.sendToken(token)
-            }.addOnFailureListener {
-                it.printStackTrace()
-            }
+    private fun subscribeOnPushNotifications() {
+        DemoPushMessagingSubscriber.subscribe(this)
     }
 
     internal companion object {

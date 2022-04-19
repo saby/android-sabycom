@@ -10,13 +10,18 @@ import java.util.UUID
 internal class SabycomLocalRepository(context: Context) : LocalRepository {
     private val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    override fun savePushToken(token: String) {
+    override fun savePushToken(token: String, serviceType: String) {
         sharedPreferences.edit().apply {
             putString(TOKEN_KEY, token)
+            putString(SERVICE_TYPE_KEY, serviceType)
         }.apply()
     }
 
     override fun getPushToken() = sharedPreferences.getString(TOKEN_KEY, null)
+
+    override fun getServiceType(): String? {
+        return sharedPreferences.getString(SERVICE_TYPE_KEY, null)
+    }
 
     override fun saveUser(user: UserData?) {
         sharedPreferences.edit().apply {
@@ -67,6 +72,7 @@ internal class SabycomLocalRepository(context: Context) : LocalRepository {
         private const val SHARED_PREFERENCES_NAME = "SabycomSharedPreferences"
         private const val API_KEY_KEY = "API_KEY"
         private const val TOKEN_KEY = "TOKEN"
+        private const val SERVICE_TYPE_KEY = "SERVICE_TYPE"
         private const val USER_DATA_ID_KEY = "USER_DATA_ID"
         private const val USER_DATA_NAME_KEY = "USER_DATA_NAME"
         private const val USER_DATA_SURNAME_KEY = "USER_DATA_SURNAME"
