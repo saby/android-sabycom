@@ -37,7 +37,13 @@ internal class SabycomRemoteRepository : RemoteRepository {
         }
     }
 
-    override fun performRegisterSync(apiKey: String, userData: UserData, token: String?, isUnsubscribe: Boolean) {
+    override fun performRegisterSync(
+        apiKey: String,
+        userData: UserData,
+        token: String?,
+        serviceType: String?,
+        isUnsubscribe: Boolean
+    ) {
         executor.submit {
             val data = JSONObject().apply {
                 put("id", userData.id.toString())
@@ -47,7 +53,7 @@ internal class SabycomRemoteRepository : RemoteRepository {
                 put("email", userData.email)
                 put("phone", userData.phone)
                 put("push_token", token)
-                put("push_os", "android_fcm")
+                put("push_os", serviceType)
                 if (isUnsubscribe) {
                     put("push_unsubscribe", true)
                 }

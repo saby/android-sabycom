@@ -9,6 +9,7 @@ import com.facebook.imagepipeline.core.MemoryChunkType
 import ru.tensor.sabycom.data.UserData
 import ru.tensor.sabycom.push.PushNotificationCenter
 import ru.tensor.sabycom.push.SabycomPushService
+import ru.tensor.sabycom.push.ServiceType
 import ru.tensor.sabycom.push.UnknownPushNotificationTypeException
 import ru.tensor.sabycom.push.manager.NotificationLocker
 import ru.tensor.sabycom.widget.SabycomFeature
@@ -130,9 +131,10 @@ object Sabycom : SabycomPushService {
      * Обрабатывает токен, полученный от Messaging Service, для обеспечения подписки на
      * пуш-уведомления по событиям виджета СБИС онлайн консультант.
      * @param token токен регистрации на сервисе Cloud Messaging для текущего проекта
+     * @param type тип сервиса, от которого был получен токен регистрации
      */
-    override fun sendToken(token: String) {
-        checkNotNull(pushService) { NOT_INIT_ERROR }.sendToken(token)
+    override fun sendToken(token: String, type: ServiceType) {
+        checkNotNull(pushService) { NOT_INIT_ERROR }.sendToken(token, type)
     }
 
     //endregion

@@ -7,7 +7,13 @@ import ru.tensor.sabycom.data.UserData
  */
 internal interface RemoteRepository {
 
-    fun performRegisterSync(apiKey: String, userData: UserData, token: String?, isUnsubscribe : Boolean = false)
+    fun performRegisterSync(
+        apiKey: String,
+        userData: UserData,
+        token: String?,
+        serviceType: String?,
+        isUnsubscribe: Boolean = false
+    )
 
     fun getUnreadMessageCount(apiKey: String, userData: UserData, callback: (Int) -> Unit)
 
