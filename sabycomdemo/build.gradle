@@ -28,7 +28,7 @@ android {
                 storeFile project.file(paramKeyPath)
                 storePassword System.getenv("KeyPassword")
                 keyPassword System.getenv("KeyPassword")
-                keyAlias 'DebugKey'
+                keyAlias System.getenv("keyAlias")
                 println "Build will be signed with keystore from $paramKeyPath"
             } else {
                 def keystoreFile = project.file('keystore/github-debug-key.jks')
