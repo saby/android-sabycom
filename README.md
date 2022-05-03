@@ -110,7 +110,7 @@ class DemoViewModel : ViewModel() {
 
 1. Для работы уведомлений на устройствах с поддержкой `Google Mobile Services` интегрируйте в ваш проект [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/android/client).<br> Для поддержки устройств с `Huawei Mobile Services` интегрируйте [Huawei Push Kit](https://developer.huawei.com/consumer/en/hms/huawei-pushkit).
 2. Чтобы подписаться на уведомления передайте токен и тип поддерживаемых сервисов в Sabycom с помощью метода `Sabycom.sendToken(token, serviceType)`.
-    * `Google Mobile Services`
+    * Google Mobile Services
         ```kotlin
         FirebaseMessaging.getInstance()
             .token
@@ -120,7 +120,7 @@ class DemoViewModel : ViewModel() {
                 exception.printStackTrace()
             }
         ```
-    * `Huawei Mobile Services`
+    * Huawei Mobile Services
         ```kotlin
         Tasks.callInBackground {
             val appId = getAppId(context)
@@ -137,7 +137,7 @@ class DemoViewModel : ViewModel() {
 <br/>В методе `onMessageReceived` проверьте принадлежность данных push-сообщения виджету с помощью метода `Sabycom.isSabycomPushNotification(payload)`.
 В случае если данные содержат информацию для отображения Sabycom уведомления метод вернет true и вам необходимо вызвать метод `Sabycom.handlePushNotification(payload)` для показа этого уведомления.
 <br/>В методе `onNewToken` вам необходимо передать обновленный токен в Sabycom посредством вызова `Sabycom.sendToken(token, serviceType)`.
-    * `Google Mobile Services`
+    * Google Mobile Services
         ```kotlin
         internal class YourPushMessagingService : FirebaseMessagingService() {
         
@@ -157,7 +157,7 @@ class DemoViewModel : ViewModel() {
             }
         }
         ```
-    * `Huawei Mobile Services`
+    * Huawei Mobile Services
         ```kotlin
         internal class YourPushMessagingService : HmsMessageService() {
         
@@ -182,7 +182,7 @@ class DemoViewModel : ViewModel() {
         }       
         ```
 4. Зарегистрируйте сервис в `AndroidManifest.xml`.
-    * `Google Mobile Services`
+    * Google Mobile Services
         ```xml
         <service
             android:name=".push.YourPushMessagingService"
@@ -192,7 +192,7 @@ class DemoViewModel : ViewModel() {
             </intent-filter>
         </service>
         ```
-    * `Huawei Mobile Services`
+    * Huawei Mobile Services
         ```xml
         <service
             android:name=".push.YourPushMessagingService"
