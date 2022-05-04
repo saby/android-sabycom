@@ -71,6 +71,7 @@ class MyActivity : AppCompatActivity() {
         return requireNotNull(UUID.fromString(userIdString))
     }
 ```
+
 4. Чтобы показать виджет, вызовите в вашем фрагменте `Sabycom.show(activity)`. Чтобы скрыть виджет, вызовите `Sabycom.hide()`.
 
  ```kotlin
@@ -107,56 +108,100 @@ class DemoViewModel : ViewModel() {
 
 ### Подписка на уведомления
 
-1. Интегрируйте в ваш проект [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/android/client).
-2. Для подписки на уведомления получите токен от `FirebaseMessaging` и передайте его в Sabycom с помощью метода `Sabycom.sendToken(token)`.
-
-```kotlin
-FirebaseMessaging.getInstance()
-    .token
-    .addOnSuccessListener { token ->
-        Sabycom.sendToken(token)
-    }.addOnFailureListener { exception ->
-        exception.printStackTrace()
-    }
-```
-
-3. Для обеспечения показа уведомлений реализуйте сервис, расширяющий `FirebaseMessagingService`.
+1. Для работы уведомлений на устройствах с поддержкой `Google Mobile Services` интегрируйте в ваш проект [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/android/client).<br> Для поддержки устройств с `Huawei Mobile Services` интегрируйте [Huawei Push Kit](https://developer.huawei.com/consumer/en/hms/huawei-pushkit).
+2. Чтобы подписаться на уведомления передайте токен и тип поддерживаемых сервисов в Sabycom с помощью метода `Sabycom.sendToken(token, serviceType)`.
+    * Google Mobile Services
+        ```kotlin
+        FirebaseMessaging.getInstance()
+            .token
+            .addOnSuccessListener { token ->
+                Sabycom.sendToken(token, ServiceType.GOOGLE)
+            }.addOnFailureListener { exception ->
+                exception.printStackTrace()
+            }
+        ```
+    * Huawei Mobile Services
+        ```kotlin
+        Tasks.callInBackground {
+            val appId = getAppId(context)
+            HmsInstanceId.getInstance(context).getToken(appId, HmsMessaging.DEFAULT_TOKEN_SCOPE)
+        }.addOnSuccessListener(TaskExecutors.immediate()) { token ->
+            if (!token.isNullOrEmpty()) {
+                Sabycom.sendToken(token, ServiceType.HUAWEI)
+            }
+        }.addOnFailureListener(TaskExecutors.immediate()) { exception ->
+            exception.printStackTrace() 
+        } 
+        ```
+3. Для обеспечения показа уведомлений реализуйте сервис, расширяющий базовый MessagingService.
 <br/>В методе `onMessageReceived` проверьте принадлежность данных push-сообщения виджету с помощью метода `Sabycom.isSabycomPushNotification(payload)`.
 В случае если данные содержат информацию для отображения Sabycom уведомления метод вернет true и вам необходимо вызвать метод `Sabycom.handlePushNotification(payload)` для показа этого уведомления.
-<br/>В методе `onNewToken` вам необходимо передать обновленный токен в Sabycom посредством вызова `Sabycom.sendToken(token)`.
-
-```kotlin
-internal class YourPushMessagingService : FirebaseMessagingService() {
-
-    override fun onMessageReceived(message: RemoteMessage) {
-        val payload = message.data
-        // Проверяет, пришел push от Sabycom или от другого сервиса
-        if (Sabycom.isSabycomPushNotification(payload)) {
-            // Показывает всплывающее уведомление с новым сообщением
-            Sabycom.handlePushNotification(payload)
-        } else {
-            //...
+<br/>В методе `onNewToken` вам необходимо передать обновленный токен в Sabycom посредством вызова `Sabycom.sendToken(token, serviceType)`.
+    * Google Mobile Services
+        ```kotlin
+        internal class YourPushMessagingService : FirebaseMessagingService() {
+        
+            override fun onMessageReceived(message: RemoteMessage) {
+                val payload = message.data
+                // Проверяет, пришел push от Sabycom или от другого сервиса
+                if (Sabycom.isSabycomPushNotification(payload)) {
+                    // Показывает всплывающее уведомление с новым сообщением
+                    Sabycom.handlePushNotification(payload)
+                } else {
+                    //...
+                }
+            }
+        
+            override fun onNewToken(token: String) {
+                Sabycom.sendToken(token, ServiceType.GOOGLE)
+            }
         }
-    }
-
-    override fun onNewToken(token: String) {
-        Sabycom.sendToken(token)
-    }
-}
-```
-
+        ```
+    * Huawei Mobile Services
+        ```kotlin
+        internal class YourPushMessagingService : HmsMessageService() {
+        
+            override fun onMessageReceived(message: RemoteMessage?) {
+                super.onMessageReceived(message)
+                val payload = message?.dataOfMap
+                // Проверяет, пришел push от Sabycom или от другого сервиса
+                if (payload != null && Sabycom.isSabycomPushNotification(payload)) {
+                    // Показывает всплывающее уведомление с новым сообщением
+                    Sabycom.handlePushNotification(payload)
+                } else {
+                    //...
+                }
+            }
+        
+            override fun onNewToken(token: String?) {
+                super.onNewToken(token)
+                if (!token.isNullOrEmpty()) {
+                    Sabycom.sendToken(token, ServiceType.HUAWEI)
+                }
+            }
+        }       
+        ```
 4. Зарегистрируйте сервис в `AndroidManifest.xml`.
-
-```xml
-<service
-    android:name=".push.YourPushMessagingService"
-    android:exported="false">
-    <intent-filter>
-        <action android:name="com.google.firebase.MESSAGING_EVENT" />
-    </intent-filter>
-</service>
-```
-
+    * Google Mobile Services
+        ```xml
+        <service
+            android:name=".push.YourPushMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        ```
+    * Huawei Mobile Services
+        ```xml
+        <service
+            android:name=".push.YourPushMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        ```
 5. Установите иконку для отображения в push-уведомлении. Иконка должна быть монохромной и соответствовать [стандартам](https://material.io/design/platform-guidance/android-notifications.html#anatomy-of-a-notification) .
 <br/>Для создания иконки используйте [Image Asset Studio](https://developer.android.com/studio/write/image-asset-studio#access).
 
