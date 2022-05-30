@@ -133,6 +133,9 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
         binding?.webView?.onResume()
+        binding?.webView?.evaluateJavascript(getBeforeShowActionJs(channel)) {
+            // not needed
+        }
     }
 
     @SuppressLint("NewApi")
@@ -219,6 +222,13 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
      */
     private fun getOfflineModeJs(isOffline: Boolean, channel: String): String {
         return "window.postMessage('{\"action\":\"setOfflineMode\",\"value\":{\"isOffline\":$isOffline},\"channel\":\"$channel\", \"windowId\":\"chat\"}','*');"
+    }
+
+    /**
+     * Возвращает JavaScript который "оживляет" виджет после возвращения на экран
+     */
+    private fun getBeforeShowActionJs(channel: String): String {
+        return "window.postMessage('{\"action\":\"beforeShow\",\"value\":{},\"channel\":\"$channel\", \"windowId\":\"chat\"}','*');"
     }
 }
 
