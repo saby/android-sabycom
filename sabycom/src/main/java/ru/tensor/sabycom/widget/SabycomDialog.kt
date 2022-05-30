@@ -132,9 +132,11 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
     @SuppressLint("NewApi")
     override fun onResume() {
         super.onResume()
-        binding?.webView?.onResume()
-        binding?.webView?.evaluateJavascript(getBeforeShowActionJs(channel)) {
-            // not needed
+        binding?.apply {
+            webView.onResume()
+            webView.evaluateJavascript(getBeforeShowActionJs(channel)) {
+                // not needed
+            }
         }
     }
 
