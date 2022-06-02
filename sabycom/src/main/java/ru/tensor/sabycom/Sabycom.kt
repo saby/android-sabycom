@@ -19,6 +19,7 @@ import ru.tensor.sabycom.widget.repository.Repository
 import ru.tensor.sabycom.widget.repository.SabycomLocalRepository
 import ru.tensor.sabycom.widget.repository.SabycomRemoteRepository
 import ru.tensor.sabycom.widget.setHost
+import java.util.*
 
 /**
  * СБИС онлайн консультант.
@@ -37,9 +38,12 @@ object Sabycom : SabycomPushService {
     /**
      * Инициализация компонента предпочтительно вызывать в onCreate вашего Application класса
      * @param context - контекст приложения
-     * @param apiKey - API Ключ приложения
+     * @param apiKey - API Ключ приложения в формате UUID
+     * @throws IllegalArgumentException если передан не валидный apiKey (формат UUID).
      */
     fun initialize(context: Context, apiKey: String) {
+        UUID.fromString(apiKey)
+
         setHost(context)
         check(sabycomFeature == null && pushService == null) { "Sabycom already initialized" }
         initFresco(context)

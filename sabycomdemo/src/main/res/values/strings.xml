@@ -12,6 +12,7 @@
 
     <string name="hint_app_id">AppId</string>
     <string name="no_app_id_error">Поле appId обязательно</string>
+    <string name="invalid_app_id_error">Введите корректный идентификатор канала</string>
 
     <string-array name="hosts">
         <item>PROD</item>
