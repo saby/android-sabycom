@@ -77,6 +77,7 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
 
     @Suppress("UNUSED_PARAMETER")
     fun restart(view: View) {
+        if (!validateData()) return
         sharedPreferences.edit(true) {
             putString(CURRENT_HOST_KEY, getHostName(host.value!!))
             putString(APP_ID_KEY, appId.value)
@@ -85,8 +86,15 @@ internal class SettingsViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun validateData(): Boolean {
+        val application = getApplication<Application>()
         if (appId.value.isNullOrEmpty()) {
-            _errorMessage.value = getApplication<Application>().getString(R.string.no_app_id_error)
+            _errorMessage.value = application.getString(R.string.no_app_id_error)
+            return false
+        }
+        try {
+            UUID.fromString(appId.value)
+        }catch (e : IllegalArgumentException){
+            _errorMessage.value = application.getString(R.string.invalid_app_id_error)
             return false
         }
         return true
