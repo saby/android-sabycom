@@ -1,3 +1,8 @@
 rootProject.name = "android-sabycom"
 include ':sabycom'
-include ':sabycomdemo'
+
+// Demo app is optional and can pull legacy plugins incompatible with newer AGP/Gradle.
+// Enable it explicitly when needed: -PincludeSabycomDemo=true
+if ("true".equalsIgnoreCase(gradle.startParameter.projectProperties["includeSabycomDemo"])) {
+    include ':sabycomdemo'
+}
