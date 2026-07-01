@@ -16,14 +16,23 @@ internal class SabycomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.openEvent.observe(this) { state ->
-            if (supportFragmentManager.findFragmentByTag(SABYCOM_DIALOG_FRAGMENT_TAG) != null) return@observe
-            SabycomDialog.newInstance(state.url, state.userData, state.channel)
-                .show(supportFragmentManager, SABYCOM_DIALOG_FRAGMENT_TAG)
+            showSabycomDialog(state)
         }
 
         viewModel.closeEvent.observe(this) {
             onBackPressed()
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        viewModel.reopenWidget()
+    }
+
+    private fun showSabycomDialog(state: SabycomActivityViewModel.OpenWidgetData) {
+        if (supportFragmentManager.findFragmentByTag(SABYCOM_DIALOG_FRAGMENT_TAG) != null) return
+        SabycomDialog.newInstance(state.url, state.userData, state.channel)
+            .show(supportFragmentManager, SABYCOM_DIALOG_FRAGMENT_TAG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

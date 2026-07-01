@@ -23,6 +23,15 @@ internal class SabycomActivityViewModel(
 
     constructor(application: Application) : this(application, Sabycom.repository)
 
+    private val openWidgetData = OpenWidgetData(
+        UrlUtil.buildWidgetUrl(
+            userId = repository.requireUserData().id.toString(),
+            apiKey = repository.requireApiKey()
+        ),
+        repository.requireUserData(),
+        repository.requireApiKey()
+    )
+
     private val _openEvent = MutableLiveData<OpenWidgetData>()
     val openEvent: LiveData<OpenWidgetData> = _openEvent
 
@@ -33,14 +42,7 @@ internal class SabycomActivityViewModel(
     val pageReady: LiveData<Unit> = _pageReady
 
     init {
-        _openEvent.value = OpenWidgetData(
-            UrlUtil.buildWidgetUrl(
-                userId = repository.requireUserData().id.toString(),
-                apiKey = repository.requireApiKey()
-            ),
-            repository.requireUserData(),
-            repository.requireApiKey()
-        )
+        _openEvent.value = openWidgetData
         Sabycom.sabycomFeature?.onClose = {
             hide()
         }
@@ -66,6 +68,10 @@ internal class SabycomActivityViewModel(
         if (isNetworkAvailable()){
             _pageReady.postValue(Unit)
         }
+    }
+
+    fun reopenWidget() {
+        _openEvent.postValue(openWidgetData)
     }
 
     internal data class OpenWidgetData(val url: String, val userData: UserData, val channel: String)
