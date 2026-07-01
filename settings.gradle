@@ -1,3 +1,11 @@
+def localPropertiesFile = new File(rootDir, "local.properties")
+if (!localPropertiesFile.exists()) {
+    def sdkPath = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
+    if (sdkPath) {
+        localPropertiesFile.text = "sdk.dir=${sdkPath.replace("\\", "\\\\")}\n"
+    }
+}
+
 rootProject.name = "android-sabycom"
 include ':sabycom'
 
