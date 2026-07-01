@@ -79,7 +79,7 @@ internal class SabycomDialog : BottomSheetDialogFragment() {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener { dialog: DialogInterface ->
             val bottomSheet =
-                (dialog as BottomSheetDialog).findViewById<FrameLayout>(R.id.design_bottom_sheet)
+                (dialog as BottomSheetDialog).findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let { it ->
                 val behaviour = BottomSheetBehavior.from(it)
                 it.updateLayoutParams<CoordinatorLayout.LayoutParams> {

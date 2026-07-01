@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.appcompat.R as AppCompatR
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -57,7 +58,7 @@ internal class NotificationCompatBuilder(
                     info.theme.takeIf { it != 0 }?.let { theme ->
                         with(TypedValue()) {
                             ContextThemeWrapper(context, theme).theme.resolveAttribute(
-                                R.attr.colorPrimary, this, true
+                                AppCompatR.attr.colorPrimary, this, true
                             )
                             resourceId
                         }

@@ -185,7 +185,7 @@ internal class ChatNotificationLayout @JvmOverloads constructor(
             cornerRadius = resources.getDimension(R.dimen.sabycom_notification_chat_corner_radius)
         }, with(TypedValue()) {
             context.theme.resolveAttribute(
-                R.attr.selectableItemBackground, this, true
+                android.R.attr.selectableItemBackground, this, true
             )
             ContextCompat.getDrawable(context, resourceId)
         })
