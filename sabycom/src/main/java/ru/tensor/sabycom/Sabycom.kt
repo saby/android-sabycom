@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
-import com.facebook.imagepipeline.core.ImageTranscoderType
-import com.facebook.imagepipeline.core.MemoryChunkType
 import ru.tensor.sabycom.data.UserData
 import ru.tensor.sabycom.push.PushNotificationCenter
 import ru.tensor.sabycom.push.SabycomPushService
@@ -146,12 +144,11 @@ object Sabycom : SabycomPushService {
     private fun initFresco(context: Context) {
         val pipelineConfig = ImagePipelineConfig.newBuilder(context)
             .setDownsampleEnabled(true)
-            .setMemoryChunkType(MemoryChunkType.BUFFER_MEMORY)
-            .setImageTranscoderType(ImageTranscoderType.JAVA_TRANSCODER)
-            .experiment().setNativeCodeDisabled(true)
             .build()
 
-        Fresco.initialize(context, pipelineConfig, null, false)
+        if (!Fresco.hasBeenInitialized()) {
+            Fresco.initialize(context, pipelineConfig)
+        }
     }
 
     internal const val NOT_INIT_ERROR =
