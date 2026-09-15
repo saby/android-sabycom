@@ -1,0 +1,60 @@
+package ru.tensor.sabycom.push.parser
+
+import org.json.JSONObject
+import ru.tensor.sabycom.push.UnknownPushNotificationTypeException
+import ru.tensor.sabycom.push.parser.data.PushCloudAction
+import ru.tensor.sabycom.push.parser.data.PushNotificationMessage
+import ru.tensor.sabycom.push.parser.data.PushType
+import java.lang.Exception
+
+/**
+ * @author am.boldinov
+ */
+internal class SabycomPushNotificationParser : PushNotificationParser {
+
+    override fun isValidPayload(payload: Map<String, String>): Boolean {
+        return payload.containsKeys(*KeyContract.values())
+    }
+
+    override fun parse(payload: Map<String, String>): PushNotificationMessage {
+        try {
+            val system = JSONObject(payload.get(KeyContract.SYSTEM))
+            val type = payload.get(KeyContract.TYPE).toInt()
+            return PushNotificationMessage(
+                payload.get(KeyContract.MESSAGE_ID),
+                system.getString("title"),
+                system.getString("body"),
+                PushType.fromValue(type),
+               // payload.get(KeyContract.TIMESTAMP).toLong(), TODO 01.10.21
+                0L,
+                payload.get(KeyContract.ADDRESSEE_ID),
+                PushCloudAction.NOTIFY,
+                JSONObject()
+            )
+        } catch (e: Exception) {
+            throw UnknownPushNotificationTypeException()
+        }
+    }
+
+    private fun Map<String, String>.containsKeys(vararg keys: KeyContract): Boolean {
+        keys.forEach {
+            if (!containsKey(it.key)) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun Map<String, String>.get(key: KeyContract): String {
+        return getValue(key.key)
+    }
+
+    private enum class KeyContract(val key: String) {
+        MESSAGE_ID("message_id"),
+        ACTION("action"),
+        ADDRESSEE_ID("addresseeId"),
+        SYSTEM("system"),
+        TYPE("type"),
+        TIMESTAMP("timestamp")
+    }
+}
