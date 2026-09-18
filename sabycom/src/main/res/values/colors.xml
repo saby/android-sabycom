@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notifications -->
+    <color name="sabycom_notification_chat_title_color">@android:color/black</color>
+    <color name="sabycom_notification_chat_subtitle_color">#80000000</color> <!-- 50% alpha -->
+    <color name="sabycom_notification_chat_date_color">
+        @color/sabycom_notification_chat_subtitle_color
+    </color>
+    <color name="sabycom_notification_chat_counter_color">@android:color/white</color>
+    <color name="sabycom_notification_chat_counter_background_color">#D34E0E</color>
+    <color name="sabycom_notification_chat_close_background_color">#66000000</color>
+    <color name="sabycom_notification_default_color">#30415D</color>
+</resources>
