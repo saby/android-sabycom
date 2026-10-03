@@ -1,0 +1,3 @@
+rootProject.name = "android-sabycom"
+include ':sabycom'
+include ':sabycomdemo'
