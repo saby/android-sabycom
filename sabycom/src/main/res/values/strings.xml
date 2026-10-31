@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sabycom_meta_push_notification_icon">ru.tensor.sabycom.push.notification_icon</string>
+    <string name="sabycom_meta_push_notification_color">ru.tensor.sabycom.push.notification_color</string>
+    <string name="sabycom_web_widget_error">При загрузке произошла ошибка. Проверьте подключение к сети</string>
+    <string name="sabycom_no_file_save_permission">Нет разрешения на сохранение файла</string>
+</resources>
