@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Разрешение отслеживания состояния сети, необходимо для оффлайн режима, веб виджета "мобильный консультант"-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--Разрешение для доступа в интернет, необходимо для загрузки веб виджета "мобильный консультант"-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--Разрешение для скачивания файлов из виджета "мобильный консультант" -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--Разрешение для отправки файлов из виджета "мобильный консультант" -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <application>
+        <activity
+            android:exported="false"
+            android:name="ru.tensor.sabycom.widget.SabycomActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:theme="@style/SabycomTransparentActivityTheme" />
+    </application>
+
+</manifest>
