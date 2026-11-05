@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <ripple android:color="@android:color/black">
+            <item>
+                <shape android:shape="oval">
+                    <size
+                        android:width="@dimen/sabycom_notification_chat_close_size"
+                        android:height="@dimen/sabycom_notification_chat_close_size" />
+
+                    <solid android:color="@color/sabycom_notification_chat_close_background_color" />
+                </shape>
+            </item>
+        </ripple>
+    </item>
+    <item
+        android:bottom="@dimen/sabycom_notification_chat_close_icon_padding"
+        android:drawable="@drawable/ic_close"
+        android:gravity="center"
+        android:left="@dimen/sabycom_notification_chat_close_icon_padding"
+        android:right="@dimen/sabycom_notification_chat_close_icon_padding"
+        android:top="@dimen/sabycom_notification_chat_close_icon_padding" />
+</layer-list>
+
