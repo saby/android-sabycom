@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.tensor.sabycom">
+    <!--Разрешение для доступа в интернет, необходимо для загрузки веб виджета "мобильный консультант"-->
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>
