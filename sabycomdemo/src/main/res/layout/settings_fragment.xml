@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.tensor.sabycomdemo.settings.SettingsViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginTop="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:autofillHints="name"
+            android:ems="10"
+            android:hint="@string/hint_name"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+            android:id="@+id/surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:autofillHints="name"
+            android:hint="@string/hint_surname"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.surname}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"/>
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:autofillHints="phone"
+            android:ems="10"
+            android:hint="@string/hint_phone"
+            android:inputType="phone"
+            android:text="@={viewModel.phone}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/surname"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:autofillHints="emailAddress"
+            android:ems="10"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:text="@={viewModel.email}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phone"/>
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:onClick="@{viewModel::startWithData}"
+            android:text="@string/start_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email"/>
+
+        <Button
+            android:id="@+id/reset_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:onClick="@{viewModel::resetRegisterUser}"
+            android:text="@string/reset_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/start_button"/>
+
+        <Button
+            android:id="@+id/anonymous_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_big_margin"
+            android:layout_marginStart="@dimen/settings_margin"
+            android:layout_marginEnd="@dimen/settings_margin"
+            android:onClick="@{viewModel::startAnonymous}"
+            android:text="@string/start_anonymous_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reset_user"/>
+
+
+        <EditText
+            android:id="@+id/app_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/settings_big_margin"
+            android:autofillHints="none"
+            android:hint="@string/hint_app_id"
+            android:inputType="text"
+            android:text="@={viewModel.appId}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/anonymous_button"/>
+
+        <Spinner
+            android:id="@+id/host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_big_margin"
+            android:layout_marginEnd="@dimen/settings_big_margin"
+            android:entries="@array/hosts"
+            android:selectedItemPosition="@={viewModel.host}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_id"/>
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_big_margin"
+            android:layout_marginEnd="@dimen/settings_big_margin"
+            android:onClick="@{viewModel::restart}"
+            android:text="@string/restart_app"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/host"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
