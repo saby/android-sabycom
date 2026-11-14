@@ -1,0 +1,105 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+    id 'com.huawei.agconnect'
+}
+
+android {
+    compileSdkVersion 33
+    buildToolsVersion "30.0.3"
+    namespace "ru.tensor.sabycomdemo"
+    defaultConfig {
+        applicationId "ru.tensor.sabycomdemo"
+        minSdkVersion 24
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+
+        signingConfig signingConfigs.debug
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+            if (System.getenv("DebugKey") != null) {
+                String paramKeyPath = System.getenv("DebugKey") as String
+                storeFile project.file(paramKeyPath)
+                storePassword System.getenv("KeyPassword")
+                keyPassword System.getenv("KeyPassword")
+                keyAlias System.getenv("keyAlias")
+                println "Build will be signed with keystore from $paramKeyPath"
+            } else {
+                def keystoreFile = project.file('keystore/github-debug-key.jks')
+                if (keystoreFile.exists()) {
+                    storeFile keystoreFile
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+    buildFeatures {
+        //noinspection DataBindingWithoutKapt
+        dataBinding true
+    }
+
+    flavorDimensions  = ['services']
+    productFlavors {
+        google {
+            dimension "services"
+        }
+        huawei {
+            dimension "services"
+        }
+    }
+
+    sourceSets {
+        google {
+            manifest.srcFile 'src/google/AndroidManifest.xml'
+            java {
+                srcDirs = ['src/google/java']
+            }
+        }
+        huawei {
+            manifest.srcFile 'src/huawei/AndroidManifest.xml'
+            java {
+                srcDirs = ['src/huawei/java']
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation "ru.tensor.sabycom:sabycom:$publishingVersionCode"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.appcompat:appcompat:1.3.1"
+    implementation "com.google.android.material:material:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
+
+    // google
+    googleImplementation platform('com.google.firebase:firebase-bom:28.4.1')
+    googleImplementation 'com.google.firebase:firebase-messaging'
+
+    // huawei
+    huaweiImplementation 'com.huawei.hms:push:6.3.0.302'
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
