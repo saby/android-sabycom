@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/sabycom_notification_chat_content_width"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/sabycom_notification_chat_content_elevation"
+    android:minHeight="68dp"
+    android:paddingStart="12dp"
+    android:paddingTop="9dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="11dp"
+    tools:ignore="SpUsage">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sabycom_notification_chat_avatar"
+        android:layout_width="@dimen/sabycom_notification_chat_avatar_size"
+        android:layout_height="@dimen/sabycom_notification_chat_avatar_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/sabycom_notification_chat_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="9dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/sabycom_notification_chat_title_color"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/sabycom_notification_chat_date"
+        app:layout_constraintStart_toEndOf="@id/sabycom_notification_chat_avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginStart="0dp"
+        tools:text="Чат с оператором" />
+
+    <TextView
+        android:id="@+id/sabycom_notification_chat_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="9dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/sabycom_notification_chat_subtitle_color"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/sabycom_notification_chat_counter"
+        app:layout_constraintStart_toEndOf="@id/sabycom_notification_chat_avatar"
+        app:layout_constraintTop_toBottomOf="@id/sabycom_notification_chat_title"
+        app:layout_goneMarginStart="0dp"
+        app:layout_goneMarginEnd="0dp"
+        tools:text="Да, конечно" />
+
+    <TextView
+        android:id="@+id/sabycom_notification_chat_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/sabycom_notification_chat_date_color"
+        android:textSize="12dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/sabycom_notification_chat_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12 мар" />
+
+    <TextView
+        android:id="@+id/sabycom_notification_chat_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/notification_counter_background"
+        android:includeFontPadding="false"
+        android:paddingStart="6dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/sabycom_notification_chat_counter_color"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@id/sabycom_notification_chat_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sabycom_notification_chat_date"
+        tools:text="12"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
