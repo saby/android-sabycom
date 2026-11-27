@@ -1,0 +1,34 @@
+buildscript {
+    ext.kotlin_version = "1.5.30"
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath 'com.google.gms:google-services:4.3.10'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.sbis.ru:8081/artifactory/sbis'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    publishingGroupId = 'ru.tensor.sabycom'
+    publishingArtifactId = 'sabycom'
+    publishingVersionCode = System.getenv("VERSION") ?: "1.0-SNAPSHOT"
+}
